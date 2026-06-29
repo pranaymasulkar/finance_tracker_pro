@@ -1,0 +1,249 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(191, 192, 192);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+main {
+  height: calc(100vh - 100px);
+  width: 100%;
+  background-color: rgb(24, 63, 98);
+}
+header {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  box-shadow: 0px 0px 6px -3px #000000;
+  position: fixed;
+  top: 0;
+  border: 1px solid transparent;
+  background-color: #ffffff;
+}
+header .logo span {
+  font-size: 1rem;
+  color: #464646;
+}
+header .logo h2 {
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+header nav {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 2rem;
+}
+header button {
+  background-color: black;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.main-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  height: calc(100vh - 100px);
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  overflow-y: scroll;
+}
+.sidebar {
+  width: 20%;
+  height: 100%;
+  /* background-color: red; */
+  padding: 2rem 1rem;
+}
+.sidebar nav {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: gold; */
+}
+.sidebar nav a {
+  display: block;
+  color: black;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+  border-radius: 7px;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.sidebar nav button {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+  border-radius: 7px;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #000000;
+  color: #ffffff;
+  width: 100%;
+  cursor: pointer;
+}
+.main-section {
+  height: 100%;
+  width: calc(100% - 20%);
+  background-color: rgb(216, 216, 216);
+  padding: 2rem;
+}
+
+/* Form Modal CSS */
+
+.form-modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(247, 247, 247);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.form-modal .form-area,
+.transaction-modal .form-area {
+  width: 30%;
+  padding: 2rem;
+  background-color: rgb(245, 245, 245);
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px -4px #000000;
+  text-align: center;
+}
+.form-modal form,
+.transaction-modal form {
+  margin: 2rem 0;
+}
+.form-modal form label,
+.transaction-modal form label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #000000;
+  text-align: left;
+  display: block;
+}
+.form-modal form input,
+.transaction-modal form input {
+  display: block;
+  height: 40px;
+  width: 100%;
+  border: 1px solid #000000;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.form-modal form button,
+.transaction-modal form button {
+  background-color: green;
+  border: 1px solid green;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+}
+
+.form-modal .form-area .url-btn {
+  background-color: transparent;
+  color: rgb(0, 101, 232);
+  font-weight: 800;
+  outline: none;
+  border: 0;
+}
+
+/* Main Content */
+
+.transaction-modal {
+  color: black;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.672);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+}
+.transaction-modal .form-area .title-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.transaction-modal .form-area .title-area button {
+  background-color: black;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 100%;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  display: block;
+}
+.transaction-modal .form-area .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.transaction-modal .form-area .form-group div {
+  width: 100%;
+}
+.transaction-modal .form-area .form-group select {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #000000;
+  font-family: inherit;
+  width: 100%;
+  margin-bottom: 1rem;
+}
