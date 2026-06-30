@@ -19,10 +19,6 @@ const TRANSACTION_ROWS = document.querySelector("#transaction-rows");
 const registeredUsers = JSON.parse(localStorage.getItem("users")) || [];
 const userFound = JSON.parse(localStorage.getItem("LoggedInUser"));
 const myTransactions = JSON.parse(localStorage.getItem("Transactions")) || [];
-
-function getUserTransactions() {
-  return myTransactions.filter((tx) => tx.userId === userFound.id);
-}
 console.log(userFound);
 console.log(registeredUsers);
 console.log(myTransactions);
@@ -126,7 +122,6 @@ LOGIN_FORM.addEventListener("submit", (e) => {
   FORM_MODAL.style.display = "none";
   showPage("main");
   checkAuthentication();
-
   console.log("user loged in and redirect to main page", userFound);
 });
 
@@ -165,9 +160,13 @@ CLOSE_MODAL.addEventListener("click", () => {
 //=============================================================
 
 const mainSec = document.querySelector(".card-section");
-function dashboardValues() {
-  const filteredTransactions = getUserTransactions();
-  const filteredIncome = filteredTransactions.filter(
+
+function dashboardvalues() {
+  const filteredTransactions = myTransactions.filter(
+    (tx) => tx.userId === userFound.id,
+  );
+
+  const filteredIncome = myTransactions.filter(
     (income) => income.txType === "income",
   );
 
@@ -175,9 +174,9 @@ function dashboardValues() {
     return totalicom + Number(incomAmount.txAmount);
   }, 0);
 
-  // console.log(filteredIncome, "incoms", TOTAL_INCOME);
+  console.log(filteredIncome, "incoms", TOTAL_INCOME);
 
-  const filterExpense = filteredTransactions.filter(
+  const filterExpense = myTransactions.filter(
     (expense) => expense.txType === "expense",
   );
 
@@ -189,9 +188,9 @@ function dashboardValues() {
 
   console.log(filterExpense, "Total Expense", TOTAL_EXPENSE);
 
-  const TOTAL_TRANSACTIONS = filteredTransactions.length;
+  const TOTAL_TRANSACTIONS = myTransactions?.length;
 
-  const cardUi = [
+  const arr = [
     {
       title: "Current Balance",
       icon: `<i class="ri-bank-line  icon-total"></i>`,
@@ -222,9 +221,8 @@ function dashboardValues() {
     },
   ];
 
-  mainSec.innerHTML = "";
-  cardUi.forEach((item) => {
-    mainSec.innerHTML += `
+  arr.map((item, index) => {
+    return (mainSec.innerHTML += `
                         <div class="card">
                          <div class="icon">
                          ${item.icon}
@@ -232,17 +230,24 @@ function dashboardValues() {
                           <p>${item.title}</p>
                           <h3 class="${item.class}">${item.curency} ${item.amount}</h3>
                         </div>
-      `;
+      `);
   });
 }
-dashboardValues();
+dashboardvalues();
+
 //=============================================================
 // UI Of Transaction Table
 //=============================================================
 
 function transactionRow(data) {
+  const filteredTransactions = myTransactions.filter(
+    (tx) => tx.userId === userFound.id,
+  );
+
   TRANSACTION_ROWS.innerHTML = "";
-  data.forEach((value, index) => {
+  console.log(myTransactions, "mya data", userFound);
+
+  data.map((value, index) => {
     return (TRANSACTION_ROWS.innerHTML += `
                                   <tr>
                                     <td>${index + 1}</td>
@@ -264,29 +269,27 @@ function transactionRow(data) {
                                   </tr>
                               `);
   });
+
+  console.log(myTransactions[0].txAmount, "totals");
 }
 //=============================================================
 // Delete Transaction logic
 //=============================================================
 
 function deleteTransaction(id) {
-  const isConfirmed = confirm(
-    "Are you sure you want to delete this transaction?",
+  const conformDelete = confirm(
+    "Are you sure? Do you want to Delete this transaction?",
   );
+  if (!conformDelete) return;
 
-  if (!isConfirmed) return;
-
-  const updatedTransactions = myTransactions.filter(
+  const updateMyTransactions = myTransactions.filter(
     (transaction) => transaction.id !== id,
   );
 
-  localStorage.setItem(
-    "Transactions",
+  localStorage.setItem("Transactions", JSON.stringify(updateMyTransactions));
 
-    JSON.stringify(updatedTransactions),
-  );
-
-  location.reload();
+  console.log(updateMyTransactions);
+  transactionRow(updateMyTransactions);
 }
 
 //=============================================================
@@ -354,27 +357,27 @@ ADD_TRANSACTION_FORM.addEventListener("submit", (e) => {
     transactionUpdate.txDate = txDate;
     transactionUpdate.txCategory = txCategory;
 
-    editedTransactionId = null;
-    filterdMyTx();
-    dashboardValues();
-    alert("Update Transaction Succsesfully");
-  } else {
-    myTransactions.push(newTransaction);
-
-    alert("Added Transaction Succsesfully");
+    localStorage.setItem("Transactions", JSON.stringify(transactionUpdate));
+    console.log(newValues, "ye hai update");
   }
+
+  myTransactions.push(newTransaction);
 
   localStorage.setItem("Transactions", JSON.stringify(myTransactions));
 
   filterdMyTx();
 
-  dashboardValues();
+  dashboardvalues();
+
+  alert("Added Transaction Succsesfully");
 
   ADD_TRANSACTION_FORM.reset();
 
   TRANSACTION_MODAL.style.display = "none";
 
   console.log(loggedInUser, "Transaction User");
+
+  location.reload();
 
   // console.log(txType, txDescription, txAmount, txDate, txCategory);
 });
@@ -398,11 +401,10 @@ const SEARCH_INPUT = document.querySelector("#searchInput");
 const TYPE_FILTER = document.querySelector("#typeFilter");
 
 function filterdMyTx() {
-  const filteredTransactions = getUserTransactions();
   const searchedWord = SEARCH_INPUT.value.toLowerCase();
   const searchType = TYPE_FILTER.value;
 
-  const searchfilterd = filteredTransactions.filter((transaction) => {
+  const searchfilterd = myTransactions.filter((transaction) => {
     const matchedWord = transaction.txDescription
       .toLowerCase()
       .includes(searchedWord);

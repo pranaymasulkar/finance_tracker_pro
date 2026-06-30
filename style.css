@@ -1,3 +1,120 @@
+.dark-theme {
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #facc15;
+
+  --bg-color: #0f172a;
+  --surface: #1e293b;
+  --surface-secondary: #334155;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-light: #ffffff;
+
+  --border: #334155;
+
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+
+  --sidebar-bg: #1e293b;
+  --sidebar-link: #cbd5e1;
+  --sidebar-link-hover: #60a5fa;
+
+  --header-bg: #1e293b;
+
+  --card-bg: #1e293b;
+
+  --table-bg: #1e293b;
+  --table-hover: #334155;
+
+  --modal-bg: rgba(0, 0, 0, 0.75);
+
+  --button-bg: #2563eb;
+  --button-text: white;
+}
+
+:root {
+  /* ==========================
+      Primary Colors
+  ========================== */
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+
+  /* ==========================
+      Background Colors
+  ========================== */
+
+  --bg-color: #f8f9fb;
+  --surface: #ffffff;
+  --surface-secondary: #f3f4f6;
+
+  /* ==========================
+      Text Colors
+  ========================== */
+
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-light: #ffffff;
+
+  /* ==========================
+      Border & Shadow
+  ========================== */
+
+  --border: #e5e7eb;
+
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* ==========================
+      Sidebar
+  ========================== */
+
+  --sidebar-bg: #ffffff;
+  --sidebar-link: #374151;
+  --sidebar-link-hover: #2563eb;
+
+  /* ==========================
+      Header
+  ========================== */
+
+  --header-bg: #ffffff;
+
+  /* ==========================
+      Cards
+  ========================== */
+
+  --card-bg: #ffffff;
+
+  /* ==========================
+      Table
+  ========================== */
+
+  --table-bg: #ffffff;
+  --table-hover: #f9fafb;
+
+  /* ==========================
+      Modal
+  ========================== */
+
+  --modal-bg: rgba(0, 0, 0, 0.45);
+
+  /* ==========================
+      Buttons
+  ========================== */
+
+  --button-bg: #111827;
+  --button-text: #ffffff;
+}
+
+/* ==========================
+      Main CSS
+  ========================== */
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +125,7 @@ html,
 body {
   height: 100%;
   width: 100%;
-  background-color: rgb(191, 192, 192);
+  background-color: var(--bg-color);
   font-family:
     system-ui,
     -apple-system,
@@ -23,6 +140,10 @@ body {
     sans-serif;
   position: relative;
   overflow: hidden;
+  color: var(--text-primary);
+}
+h3 {
+  font-size: 24px;
 }
 main {
   height: calc(100vh - 100px);
@@ -40,7 +161,7 @@ header {
   position: fixed;
   top: 0;
   border: 1px solid transparent;
-  background-color: #ffffff;
+  background-color: var(--header-bg);
 }
 header .logo span {
   font-size: 1rem;
@@ -57,7 +178,7 @@ header nav {
   gap: 2rem;
 }
 header button {
-  background-color: black;
+  background-color: var(--button-bg);
   color: white;
   text-align: center;
   text-transform: capitalize;
@@ -124,8 +245,17 @@ header button {
 .main-section {
   height: 100%;
   width: calc(100% - 20%);
-  background-color: rgb(216, 216, 216);
+  background-color: var(--bg-color);
   padding: 2rem;
+}
+.dashborad-head-sec h2 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.dashborad-head-sec p {
+  color: #6b7280;
+  font-size: 14px;
 }
 
 /* Form Modal CSS */
@@ -246,4 +376,259 @@ header button {
   font-family: inherit;
   width: 100%;
   margin-bottom: 1rem;
+}
+
+/* Table CSS */
+.graph-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 2rem;
+}
+.graph-main {
+  width: 70%;
+}
+.graph-sidebar {
+  width: 30%;
+}
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.transaction-table th {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid #ddd;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.transaction-table td {
+  padding: 11px 8px;
+  border-bottom: 1px solid#ddd;
+  font-size: 14px;
+}
+.transaction-table td .categry {
+  background: var(--bg-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.transaction-table tbody tr:hover {
+  background: #f7f7f7;
+}
+
+.income {
+  color: green;
+  font-weight: bold;
+}
+
+.expense {
+  color: red;
+  font-weight: bold;
+}
+
+.edit-btn {
+  padding: 0 3px;
+  background: transparent;
+  color: royalblue;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.delete-btn {
+  padding: 0 3px;
+  background: transparent;
+  color: crimson;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  opacity: 0.9;
+}
+
+/* Card Section */
+
+.card-section {
+  margin: 3rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.card-section .card {
+  height: 150px;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+}
+.card-section .card p {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.card-section .card h3 {
+  font-weight: 600;
+  font-size: 24px;
+}
+.card-section .card .text-red {
+  color: #991b1b;
+}
+.card-section .card .text-green {
+  color: #166534;
+}
+.card-section .card i {
+  padding: 0.6rem;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-bottom: 1rem;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+.card-section .card .icon-total {
+  background-color: #dbeafe;
+}
+.card-section .card .icon-incom {
+  background-color: #dcfce7;
+}
+.card-section .card .icon-expense {
+  background-color: #fee2e2;
+}
+.card-section .card .icon-tran {
+  background-color: #dbeafe;
+}
+
+/* Dark Mode Btn CSS */
+.dark-mode-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.switch input:checked + .slider {
+  background-color: #2196f3;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.switch input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.switch .slider.round {
+  border-radius: 34px;
+}
+
+.switch .slider.round:before {
+  border-radius: 50%;
+}
+
+/* Search Bar */
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f8f9fb;
+  padding: 10px 16px;
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid #e5e7eb;
+}
+.search-bar input {
+  border: none;
+  background: #f8f9fb;
+  outline: none;
+  width: 100%;
+  color: #1a1d21;
+}
+
+.filter-select {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8f9fb;
+  color: #1a1d21;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
 }

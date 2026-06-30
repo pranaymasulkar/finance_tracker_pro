@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <main id="main">
@@ -21,68 +22,142 @@
       <section class="main-container">
         <div class="sidebar">
           <nav>
-           <div>
-             <a href="/">dashboard</a>
-            <a href="/setting">setting</a>
-           </div>
+            <div>
+              <a href="/"><i class="ri-gallery-view-2"></i> dashboard</a>
+              <a href="/setting"><i class="ri-settings-4-fill"></i> setting</a>
+            </div>
             <button id="add-transaction-btn">+ add transaction</button>
           </nav>
         </div>
-        <section class="main-section"></section>
+        <section class="main-section">
+          <!-- Title Section Start -->
+          <section class="dashborad-head-sec">
+              <h2>Financial Overview</h2>
+              <p>Real-time tracking application</p>
+          </section>
+           <!-- Title Section End -->
+
+           <!-- Title Section Start -->
+          <section class="card-section">
+            <!-- Hear Is The dynamic Code -->
+          </section>
+           <!-- Title Section End -->
+           
+          <section class="graph-container">
+
+            <div class="graph-main">
+              <!-- Transaction Table Start -->
+            <div class="transcation-table">
+              <div class="table-container">
+                <h3>All Transactions</h3>
+                <div class="search-section">
+                    <div class="search-bar">
+                        <i class="ri-search-2-line"></i>
+                        <input type="text" id="searchInput" placeholder="Search transactions...">
+                    </div>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="income">Income Only</option>
+                        <option value="expense">Expense Only</option>
+                    </select>
+                </div>
+                <table class="transaction-table">
+                  <thead>
+                    <tr>
+                      <th>Sr. No.</th>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Type</th>
+                      <th>Amount (₹)</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+  
+                  <tbody id="transaction-rows">
+                    <!-- Dynamic rows will be added here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Transaction Table End -->
+            </div>
+             <div class="graph-sidebar">
+          <div class="transcation-table">
+            <div class="table-container">
+                <h3>Preferences</h3>
+               <div class="dark-mode-section">
+                <h4>Dark Mode</h4>
+                <label class="switch">
+                <input id="dark-mode-btn" type="checkbox">
+                <span class="slider round"></span>
+              </label>
+               </div>
+              </div>
+            </div>
+             </div>
+          </section>
+          
+        </section>
       </section>
+
       <!-- Transaction Add Modal Start -->
-    <section class="transaction-modal">
-      <div class="form-area">
-        <div class="title-area">
-          <h2>Add Transaction</h2>
-          <button id="closeModal">X</button>
-        </div>
-        <form action="" id="addTransactionForm">
-          <div class="form-group">
-            <div>
+      <section class="transaction-modal">
+        <div class="form-area">
+          <div class="title-area">
+            <h2>Add Transaction</h2>
+            <button id="closeModal">X</button>
+          </div>
+          <form action="" id="addTransactionForm">
+            <div class="form-group">
+              <div>
                 <label>Type</label>
-            <select id="txType" required="">
-              <option value="expense">Expense</option>
-              <option value="income">Income</option>
-            </select>
+                <select id="txType" required>
+                  <option value="expense">Expense</option>
+                  <option value="income">Income</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <label>Description</label>
-          <input type="text" placeholder="e.g. Amazon, Salary, Coffee" />
-          <div class="form-group">
-            <div>
-              <label>Ammount</label>
-              <input type="number" placeholder="" />
+            <label>Description</label>
+            <input
+              id="txDescription"
+              type="text"
+              placeholder="e.g. Amazon, Salary, Coffee"
+            />
+            <div class="form-group">
+              <div>
+                <label>Ammount</label>
+                <input id="txAmount" type="number" placeholder="0000" required/>
+              </div>
+              <div>
+                <label>Date</label>
+                <input id="txDate" type="date" required/>
+              </div>
             </div>
-            <div>
-              <label>Date</label>
-              <input type="date" placeholder="" />
+            <div class="form-group">
+              <div>
+                <label>Category</label>
+                <select id="txCategory" required>
+                  <option value="" disabled="" selected="">
+                    Select a category
+                  </option>
+                  <option value="Food Dining">Food Dining</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Recharge Bills">Recharge Bills</option>
+                  <option value="Petrol Auto">Petrol Auto</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Salary">Salary</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-           <div>
-             <label>Category</label>
-            <select id="txCategory" required="">
-              <option value="" disabled="" selected="">
-                Select a category
-              </option>
-              <option value="Food Dining">Food Dining</option>
-              <option value="Shopping">Shopping</option>
-              <option value="Recharge Bills">Recharge Bills</option>
-              <option value="Petrol Auto">Petrol Auto</option>
-              <option value="Utilities">Utilities</option>
-              <option value="Salary">Salary</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Other">Other</option>
-            </select>
-           </div>
-          </div>
-          <button type="submit">Save Transaction</button>
-        </form>
-      </div>
-      <!-- Transaction Add Modal Start End -->
-    </section>
- <!-- Transaction Add Modal End -->
+            <button type="submit">Save Transaction</button>
+          </form>
+        </div>
+        <!-- Transaction Add Modal Start End -->
+      </section>
+      <!-- Transaction Add Modal End -->
     </main>
     <section class="form-modal">
       <!-- Login Form Start -->
@@ -126,7 +201,6 @@
       <!-- Reister Form End -->
     </section>
 
-    
     <script src="script.js"></script>
   </body>
 </html>
