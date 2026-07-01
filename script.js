@@ -12,6 +12,8 @@ const TRANSACTION_MODAL = document.querySelector(".transaction-modal");
 const ADD_TRANSACTION_BTN = document.querySelector("#add-transaction-btn");
 const ADD_TRANSACTION_FORM = document.querySelector("#addTransactionForm");
 const TRANSACTION_ROWS = document.querySelector("#transaction-rows");
+const BAR_INCOM_EXPENSE_CHART = document.querySelector("#icomeExpenseChart");
+const CATEGORY_EXPENSE = document.querySelector("#categoryExpense");
 //=============================================================
 // Local Storage
 //=============================================================
@@ -38,7 +40,7 @@ function checkAuthentication() {
     FORM_MODAL.style.display = "none";
 
     showPage("main");
-    PROFILE_NAME.textContent = loggedInUser.userId.toUpperCase();
+    PROFILE_NAME.textContent = loggedInUser.userId.charAt(0).toUpperCase();
     console.log(`Welcome Back ${loggedInUser.userId}`);
   } else {
     FORM_MODAL.style.display = "flex";
@@ -126,7 +128,7 @@ LOGIN_FORM.addEventListener("submit", (e) => {
   FORM_MODAL.style.display = "none";
   showPage("main");
   checkAuthentication();
-
+  location.reload();
   console.log("user loged in and redirect to main page", userFound);
 });
 
@@ -135,11 +137,10 @@ LOGIN_FORM.addEventListener("submit", (e) => {
 //=============================================================
 
 LOGOUT_BTN.addEventListener("click", () => {
-  localStorage.removeItem("LoggedInUser");
-
-  alert("Logged Out Successfully.");
-
   checkAuthentication();
+  localStorage.removeItem("LoggedInUser");
+  location.reload();
+  alert("Logged Out Successfully.");
 });
 
 //=============================================================
@@ -187,7 +188,24 @@ function dashboardValues() {
 
   const CURRENT_BALANCE = TOTAL_INCOME - TOTAL_EXPENSE;
 
-  console.log(filterExpense, "Total Expense", TOTAL_EXPENSE);
+  const expenseTransactions = filteredTransactions.filter(
+    (type) => type.txType === "expense",
+  );
+
+  const categoryWiseExpense = {};
+  expenseTransactions.forEach((txCat) => {
+    if (!expenseTransactions[txCat.txCategory]) {
+      categoryWiseExpense[txCat.txCategory] = 0;
+    }
+    categoryWiseExpense[txCat.txCategory] += Number(txCat.txAmount);
+  });
+
+  const Lable = Object.keys(categoryWiseExpense);
+  const expensData = Object.values(categoryWiseExpense);
+  console.log(categoryWiseExpense, Lable, expensData, "expenses");
+  doughnutChartUpdate(Lable, expensData);
+
+  // console.log(filterExpense, "Total Expense", TOTAL_EXPENSE);
 
   const TOTAL_TRANSACTIONS = filteredTransactions.length;
 
@@ -234,6 +252,7 @@ function dashboardValues() {
                         </div>
       `;
   });
+  barChartUpdate(TOTAL_INCOME, TOTAL_EXPENSE);
 }
 dashboardValues();
 //=============================================================
@@ -354,10 +373,11 @@ ADD_TRANSACTION_FORM.addEventListener("submit", (e) => {
     transactionUpdate.txDate = txDate;
     transactionUpdate.txCategory = txCategory;
 
-    editedTransactionId = null;
     filterdMyTx();
     dashboardValues();
     alert("Update Transaction Succsesfully");
+    editedTransactionId = null;
+    TRANSACTION_MODAL.style.display = "none";
   } else {
     myTransactions.push(newTransaction);
 
@@ -374,6 +394,7 @@ ADD_TRANSACTION_FORM.addEventListener("submit", (e) => {
 
   TRANSACTION_MODAL.style.display = "none";
 
+  location.reload();
   console.log(loggedInUser, "Transaction User");
 
   // console.log(txType, txDescription, txAmount, txDate, txCategory);
@@ -422,3 +443,77 @@ filterdMyTx();
 
 SEARCH_INPUT.addEventListener("input", filterdMyTx);
 TYPE_FILTER.addEventListener("change", filterdMyTx);
+
+//=============================================================
+// Chart Manage Logic
+//=============================================================
+
+function barChartUpdate(income, expense) {
+  new Chart(BAR_INCOM_EXPENSE_CHART, {
+    type: "bar",
+    data: {
+      labels: ["Icom vs Expense"],
+      datasets: [
+        {
+          label: "Income",
+          data: [income],
+          backgroundColor: ["rgb(22, 101, 52)"],
+          borderColor: ["rgb(22, 101, 52)"],
+          borderWidth: 1,
+        },
+        {
+          label: "Expense",
+          data: [expense],
+          backgroundColor: ["rgb(153, 27, 27)"],
+          borderColor: ["rgb(153, 27, 27)"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+
+function doughnutChartUpdate(Lable, expensData) {
+  new Chart(CATEGORY_EXPENSE, {
+    type: "doughnut",
+    data: {
+      labels: Lable,
+      datasets: [
+        {
+          label: "Total Expense",
+          data: expensData,
+          backgroundColor: [
+            "#F59E0B",
+            "#3B82F6",
+            "#EC4899",
+            "#EF4444",
+            "#10B981",
+            "#8B5CF6",
+            "#6366F1",
+            "#22C55E",
+            "#14B8A6",
+            "#EAB308",
+            "#92400E",
+            "#06B6D4",
+            "#84CC16",
+            "#6B7280",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+    },
+  });
+}
+doughnutChartUpdate();

@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
     <main id="main">
@@ -15,6 +21,10 @@
           <span>Enterprise Finance</span>
         </div>
         <nav>
+          <label class="switch">
+                      <input id="dark-mode-btn" type="checkbox" />
+                      <span class="slider round"></span>
+                    </label>
           <h3 id="profileName"></h3>
           <button id="logoutBtn">Logout</button>
         </nav>
@@ -32,72 +42,79 @@
         <section class="main-section">
           <!-- Title Section Start -->
           <section class="dashborad-head-sec">
-              <h2>Financial Overview</h2>
-              <p>Real-time tracking application</p>
+            <h2>Financial Overview</h2>
+            <p>Real-time tracking application</p>
           </section>
-           <!-- Title Section End -->
+          <!-- Title Section End -->
 
-           <!-- Title Section Start -->
+          <!-- Title Section Start -->
           <section class="card-section">
             <!-- Hear Is The dynamic Code -->
           </section>
-           <!-- Title Section End -->
-           
-          <section class="graph-container">
+          <!-- Title Section End -->
 
+          <section class="graph-container">
             <div class="graph-main">
+
+                <div class="table-container">
+                  <h3>Cash Flow Analysis</h3>
+                    <canvas id="icomeExpenseChart"></canvas>
+                  </div>
               <!-- Transaction Table Start -->
-            <div class="transcation-table">
-              <div class="table-container">
-                <h3>All Transactions</h3>
-                <div class="search-section">
+              <div class="transcation-table">
+                <div class="table-container">
+                  <h3>All Transactions</h3>
+                  <div class="search-section">
                     <div class="search-bar">
-                        <i class="ri-search-2-line"></i>
-                        <input type="text" id="searchInput" placeholder="Search transactions...">
+                      <i class="ri-search-2-line"></i>
+                      <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search transactions..."
+                      />
                     </div>
                     <select id="typeFilter" class="filter-select">
-                        <option value="all">All Types</option>
-                        <option value="income">Income Only</option>
-                        <option value="expense">Expense Only</option>
+                      <option value="all">All Types</option>
+                      <option value="income">Income Only</option>
+                      <option value="expense">Expense Only</option>
                     </select>
+                  </div>
+                  <table class="transaction-table">
+                    <thead>
+                      <tr>
+                        <th>Sr. No.</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Amount (₹)</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="transaction-rows">
+                      <!-- Dynamic rows will be added here -->
+                    </tbody>
+                  </table>
                 </div>
-                <table class="transaction-table">
-                  <thead>
-                    <tr>
-                      <th>Sr. No.</th>
-                      <th>Date</th>
-                      <th>Description</th>
-                      <th>Category</th>
-                      <th>Type</th>
-                      <th>Amount (₹)</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-  
-                  <tbody id="transaction-rows">
-                    <!-- Dynamic rows will be added here -->
-                  </tbody>
-                </table>
+              </div>
+              <!-- Transaction Table End -->
+            </div>
+            <div class="graph-sidebar">
+              <div class="transcation-table">
+                <div class="table-container">
+                  <h3>Expense Analysis</h3>
+                  
+
+                  <!-- pi chart start -->
+                 <div>
+                    <canvas id="categoryExpense"></canvas>
+                  </div>
+                  <!-- pi chart end -->
+                </div>
               </div>
             </div>
-            <!-- Transaction Table End -->
-            </div>
-             <div class="graph-sidebar">
-          <div class="transcation-table">
-            <div class="table-container">
-                <h3>Preferences</h3>
-               <div class="dark-mode-section">
-                <h4>Dark Mode</h4>
-                <label class="switch">
-                <input id="dark-mode-btn" type="checkbox">
-                <span class="slider round"></span>
-              </label>
-               </div>
-              </div>
-            </div>
-             </div>
           </section>
-          
         </section>
       </section>
 
@@ -127,11 +144,16 @@
             <div class="form-group">
               <div>
                 <label>Ammount</label>
-                <input id="txAmount" type="number" placeholder="0000" required/>
+                <input
+                  id="txAmount"
+                  type="number"
+                  placeholder="0000"
+                  required
+                />
               </div>
               <div>
                 <label>Date</label>
-                <input id="txDate" type="date" required/>
+                <input id="txDate" type="date" required />
               </div>
             </div>
             <div class="form-group">
@@ -201,6 +223,7 @@
       <!-- Reister Form End -->
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
