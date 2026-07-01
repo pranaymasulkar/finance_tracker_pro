@@ -1,115 +1,87 @@
 .dark-theme {
-  --primary: #3b82f6;
-  --primary-hover: #60a5fa;
+  /* Background */
+  --white: #111827;
+  --doctor: #0f172a;
+  --lynx: #1e293b;
 
-  --success: #22c55e;
-  --danger: #ef4444;
-  --warning: #facc15;
+  /* Text */
+  --black: #f9fafb;
+  --sambucus: #f8fafc;
+  --wood-charcoal: #d1d5db;
+  --brilliant: #cbd5e1;
+  --encore: #94a3b8;
 
-  --bg-color: #0f172a;
-  --surface: #1e293b;
-  --surface-secondary: #334155;
+  /* Borders */
+  --murmur: #334155;
+  --steam: #475569;
+  --cerebralgrey: #64748b;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-light: #ffffff;
+  /* Brand */
+  --green: #22c55e;
+  --green-primary: #4ade80;
+  --red: #ef4444;
+  --red-primary: #f87171;
+  --blue-gungeon: #3b82f6;
 
-  --border: #334155;
+  /* Cards */
+  --hoarfrost: #1e3a8a;
+  --toxiclatte: #14532d;
+  --mistyrose: #7f1d1d;
 
-  --shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-
-  --sidebar-bg: #1e293b;
-  --sidebar-link: #cbd5e1;
-  --sidebar-link-hover: #60a5fa;
-
-  --header-bg: #1e293b;
-
-  --card-bg: #1e293b;
-
-  --table-bg: #1e293b;
-  --table-hover: #334155;
-
-  --modal-bg: rgba(0, 0, 0, 0.75);
-
+  /* Buttons */
   --button-bg: #2563eb;
-  --button-text: white;
+  --button-text: #ffffff;
+
+  /* Inputs */
+  --input-bg: #1f2937;
+  --input-border: #374151;
+
+  /* Shadows */
+  --shadow: rgba(0, 0, 0, 0.45);
+  --sidebar-bg: #172033;
 }
 
 :root {
-  /* ==========================
-      Primary Colors
-  ========================== */
+  /* Background */
+  --white: #ffffff;
+  --doctor: #f8f9fb;
+  --lynx: #f7f7f7;
 
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
+  /* Text */
+  --black: #000000;
+  --sambucus: #111827;
+  --wood-charcoal: #464646;
+  --brilliant: #545454;
+  --encore: #6b7280;
 
-  --success: #16a34a;
-  --danger: #dc2626;
-  --warning: #f59e0b;
+  /* Borders */
+  --murmur: #e5e7eb;
+  --steam: #dddddd;
+  --cerebralgrey: #cccccc;
 
-  /* ==========================
-      Background Colors
-  ========================== */
+  /* Brand */
+  --green: #008000;
+  --green-primary: #166534;
+  --red: #ff0000;
+  --red-primary: #991b1b;
+  --blue-gungeon: #0065e8;
 
-  --bg-color: #f8f9fb;
-  --surface: #ffffff;
-  --surface-secondary: #f3f4f6;
+  /* Cards */
+  --hoarfrost: #dbeafe;
+  --toxiclatte: #dcfce7;
+  --mistyrose: #fee2e2;
 
-  /* ==========================
-      Text Colors
-  ========================== */
-
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-light: #ffffff;
-
-  /* ==========================
-      Border & Shadow
-  ========================== */
-
-  --border: #e5e7eb;
-
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-
-  /* ==========================
-      Sidebar
-  ========================== */
-
-  --sidebar-bg: #ffffff;
-  --sidebar-link: #374151;
-  --sidebar-link-hover: #2563eb;
-
-  /* ==========================
-      Header
-  ========================== */
-
-  --header-bg: #ffffff;
-
-  /* ==========================
-      Cards
-  ========================== */
-
-  --card-bg: #ffffff;
-
-  /* ==========================
-      Table
-  ========================== */
-
-  --table-bg: #ffffff;
-  --table-hover: #f9fafb;
-
-  /* ==========================
-      Modal
-  ========================== */
-
-  --modal-bg: rgba(0, 0, 0, 0.45);
-
-  /* ==========================
-      Buttons
-  ========================== */
-
+  /* Buttons */
   --button-bg: #111827;
   --button-text: #ffffff;
+
+  /* Inputs */
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+
+  /* Shadows */
+  --shadow: rgba(0, 0, 0, 0.08);
+  --sidebar-bg: #f8fafc;
 }
 
 /* ==========================
@@ -119,13 +91,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: var(--white-text);
 }
 
 html,
 body {
   height: 100%;
   width: 100%;
-  background-color: var(--bg-color);
+  background-color: var(--doctor);
   font-family:
     system-ui,
     -apple-system,
@@ -140,7 +113,7 @@ body {
     sans-serif;
   position: relative;
   overflow: hidden;
-  color: var(--text-primary);
+  color: var(--sambucus);
 }
 h3 {
   font-size: 24px;
@@ -148,7 +121,7 @@ h3 {
 main {
   height: calc(100vh - 100px);
   width: 100%;
-  background-color: rgb(24, 63, 98);
+  background-color: var(--doctor);
 }
 header {
   height: 100px;
@@ -157,15 +130,15 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
-  box-shadow: 0px 0px 6px -3px #000000;
+  box-shadow: 0 2px 10px var(--shadow);
   position: fixed;
   top: 0;
   border: 1px solid transparent;
-  background-color: var(--header-bg);
+  background-color: var(--white);
 }
 header .logo span {
   font-size: 1rem;
-  color: #464646;
+  color: var(--wood-charcoal);
 }
 header .logo h2 {
   font-size: 2rem;
@@ -178,20 +151,20 @@ header nav {
   gap: 2rem;
 }
 #profileName {
-  background-color: #545454;
   height: 40px;
   width: 40px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 0px 8px -2px #000000;
-  color: #ffffff;
+  box-shadow: 0px 0px 8px -2px var(--black);
   font-size: 1rem;
+  background: var(--blue-gungeon);
+  color: #fff;
 }
 header button {
   background-color: var(--button-bg);
-  color: white;
+  color: #fff;
   text-align: center;
   text-transform: capitalize;
   font-size: 1rem;
@@ -208,14 +181,15 @@ header button {
   align-items: start;
   height: calc(100vh - 100px);
   width: 100%;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--white);
   overflow-y: scroll;
 }
 .sidebar {
   width: 20%;
   height: 100%;
-  /* background-color: red; */
   padding: 2rem 1rem;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--murmur);
 }
 .sidebar nav {
   height: 100%;
@@ -223,44 +197,58 @@ header button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* background-color: gold; */
 }
 .sidebar nav a {
   display: block;
-  color: black;
   text-align: left;
-  padding: 0.5rem 1rem;
-  border: 1px solid black;
-  border-radius: 7px;
-  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
   text-transform: capitalize;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 600;
+  color: var(--sambucus);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+.sidebar nav a:hover {
+  background: var(--white);
+  border-color: var(--murmur);
+  transform: translateX(4px);
+}
+
+.sidebar nav a.active {
+  background: var(--blue-gungeon);
+  color: #fff;
+  border-color: var(--blue-gungeon);
 }
 .sidebar nav button {
   display: block;
-  color: black;
   text-align: center;
   padding: 0.5rem 1rem;
-  border: 1px solid black;
   border-radius: 7px;
   margin-bottom: 0.5rem;
   text-transform: capitalize;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 600;
-  background-color: #000000;
-  color: #ffffff;
+  color: var(--white-text);
   width: 100%;
   cursor: pointer;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
 }
+
 .main-section {
   height: 100%;
   width: calc(100% - 20%);
-  background-color: var(--bg-color);
   padding: 2rem;
   overflow-y: scroll;
+  background: var(--white);
+  border-left: 1px solid var(--murmur);
 }
 .dashborad-head-sec h2 {
   font-size: 28px;
@@ -268,7 +256,7 @@ header button {
 }
 
 .dashborad-head-sec p {
-  color: #6b7280;
+  color: var(--encore);
   font-size: 14px;
 }
 
@@ -277,7 +265,7 @@ header button {
 .form-modal {
   height: 100vh;
   width: 100vw;
-  background-color: rgb(247, 247, 247);
+  background-color: var(--lynx);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -289,9 +277,9 @@ header button {
 .transaction-modal .form-area {
   width: 30%;
   padding: 2rem;
-  background-color: rgb(245, 245, 245);
+  background-color: var(--lynx);
   border-radius: 10px;
-  box-shadow: 0px 0px 8px -4px #000000;
+  box-shadow: 0px 0px 8px -4px var(--black);
   text-align: center;
 }
 .form-modal form,
@@ -302,25 +290,27 @@ header button {
 .transaction-modal form label {
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: #000000;
   text-align: left;
   display: block;
+  color: var(--sambucus);
 }
 .form-modal form input,
 .transaction-modal form input {
   display: block;
   height: 40px;
   width: 100%;
-  border: 1px solid #000000;
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
+  background: var(--input-bg);
+  color: var(--sambucus);
+  border: 1px solid var(--input-border);
 }
 .form-modal form button,
 .transaction-modal form button {
-  background-color: green;
-  border: 1px solid green;
-  color: white;
+  background-color: var(--green);
+  border: 1px solid var(--green);
+  color: var(--white-text);
   text-align: center;
   text-transform: capitalize;
   font-size: 1rem;
@@ -332,7 +322,7 @@ header button {
 
 .form-modal .form-area .url-btn {
   background-color: transparent;
-  color: rgb(0, 101, 232);
+  color: var(--blue-gungeon);
   font-weight: 800;
   outline: none;
   border: 0;
@@ -341,10 +331,8 @@ header button {
 /* Main Content */
 
 .transaction-modal {
-  color: black;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 0.672);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -352,6 +340,8 @@ header button {
   top: 0;
   left: 0;
   border-radius: 0;
+  color: var(--sambucus);
+  background: rgba(0, 0, 0, 0.6);
 }
 .transaction-modal .form-area .title-area {
   display: flex;
@@ -360,8 +350,6 @@ header button {
   gap: 2rem;
 }
 .transaction-modal .form-area .title-area button {
-  background-color: black;
-  color: white;
   text-align: center;
   text-transform: capitalize;
   font-size: 0.5rem;
@@ -371,6 +359,8 @@ header button {
   height: 40px;
   width: 40px;
   display: block;
+  background: var(--button-bg);
+  color: var(--button-text);
 }
 .transaction-modal .form-area .form-group {
   display: flex;
@@ -383,13 +373,13 @@ header button {
 }
 .transaction-modal .form-area .form-group select {
   padding: 10px;
-  border: 1px solid black;
   border-radius: 6px;
-  background: #ffffff;
-  color: #000000;
   font-family: inherit;
   width: 100%;
   margin-bottom: 1rem;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--sambucus);
 }
 
 /* Table CSS */
@@ -409,18 +399,18 @@ header button {
   width: 100%;
   overflow-x: auto;
   margin-top: 20px;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--white);
+  border: 1px solid var(--murmur);
   border-radius: 12px;
   padding: 1rem;
   position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
 .transaction-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
+  background: var(--white);
   border-radius: 10px;
   overflow: hidden;
   margin-top: 1rem;
@@ -429,41 +419,41 @@ header button {
 .transaction-table th {
   text-align: left;
   padding: 12px 8px;
-  border-bottom: 1px solid #ddd;
-  color: #6b7280;
+  border-bottom: 1px solid var(--steam);
+  color: var(--encore);
   font-size: 14px;
 }
 
 .transaction-table td {
   padding: 11px 8px;
-  border-bottom: 1px solid#ddd;
+  border-bottom: 1px solid var(--steam);
   font-size: 14px;
 }
 .transaction-table td .categry {
-  background: var(--bg-color);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
+  background: var(--doctor);
 }
 
 .transaction-table tbody tr:hover {
-  background: #f7f7f7;
+  background: var(--lynx);
 }
 
 .income {
-  color: green;
+  color: var(--green);
   font-weight: bold;
 }
 
 .expense {
-  color: red;
+  color: var(--red);
   font-weight: bold;
 }
 
 .edit-btn {
   padding: 0 3px;
   background: transparent;
-  color: royalblue;
+  color: var(--blue-gungeon);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -473,7 +463,7 @@ header button {
 .delete-btn {
   padding: 0 3px;
   background: transparent;
-  color: crimson;
+  color: var(--red);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -498,14 +488,14 @@ header button {
 .card-section .card {
   height: 150px;
   width: 100%;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--white);
+  border: 1px solid var(--murmur);
   border-radius: 12px;
   padding: 20px;
   position: relative;
 }
 .card-section .card p {
-  color: #6b7280;
+  color: var(--encore);
   font-size: 14px;
   margin-bottom: 4px;
 }
@@ -514,10 +504,10 @@ header button {
   font-size: 24px;
 }
 .card-section .card .text-red {
-  color: #991b1b;
+  color: var(--red-primary);
 }
 .card-section .card .text-green {
-  color: #166534;
+  color: var(--green-primary);
 }
 .card-section .card i {
   padding: 0.6rem;
@@ -530,16 +520,16 @@ header button {
   text-align: center;
 }
 .card-section .card .icon-total {
-  background-color: #dbeafe;
+  background-color: var(--hoarfrost);
 }
 .card-section .card .icon-incom {
-  background-color: #dcfce7;
+  background-color: var(--toxiclatte);
 }
 .card-section .card .icon-expense {
-  background-color: #fee2e2;
+  background-color: var(--mistyrose);
 }
 .card-section .card .icon-tran {
-  background-color: #dbeafe;
+  background-color: var(--hoarfrost);
 }
 
 /* Dark Mode Btn CSS */
@@ -564,7 +554,7 @@ header button {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--cerebralgrey);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -576,17 +566,17 @@ header button {
   width: 18px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--white);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 .switch input:checked + .slider {
-  background-color: #2196f3;
+  background-color: var(--blue-gungeon);
 }
 
 .switch input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px var(--blue-gungeon);
 }
 
 .switch input:checked + .slider:before {
@@ -616,26 +606,26 @@ header button {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #f8f9fb;
+  background-color: var(--doctor);
   padding: 10px 16px;
   border-radius: 8px;
   width: 100%;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--murmur);
 }
 .search-bar input {
   border: none;
-  background: #f8f9fb;
+  background: var(--doctor);
   outline: none;
   width: 100%;
-  color: #1a1d21;
+  color: var(--sambucus);
 }
 
 .filter-select {
   padding: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--murmur);
   border-radius: 8px;
-  background: #f8f9fb;
-  color: #1a1d21;
+  background: var(--doctor);
+  color: var(--sambucus);
   cursor: pointer;
   outline: none;
   width: 100%;

@@ -14,8 +14,10 @@ const ADD_TRANSACTION_FORM = document.querySelector("#addTransactionForm");
 const TRANSACTION_ROWS = document.querySelector("#transaction-rows");
 const BAR_INCOM_EXPENSE_CHART = document.querySelector("#icomeExpenseChart");
 const CATEGORY_EXPENSE = document.querySelector("#categoryExpense");
+const MAIN_CARD_SECTION = document.querySelector(".card-section");
+
 //=============================================================
-// Local Storage
+// Local Storage & Helper Functions
 //=============================================================
 
 const registeredUsers = JSON.parse(localStorage.getItem("users")) || [];
@@ -25,12 +27,28 @@ const myTransactions = JSON.parse(localStorage.getItem("Transactions")) || [];
 function getUserTransactions() {
   return myTransactions.filter((tx) => tx.userId === userFound.id);
 }
-console.log(userFound);
-console.log(registeredUsers);
-console.log(myTransactions);
+// console.log(userFound);
+// console.log(registeredUsers);
+// console.log(myTransactions);
 
 //=============================================================
-// Page Swicth logic
+// Navigation
+//=============================================================
+
+function showPage(pageId) {
+  const pages = ["main", "login", "register"];
+
+  pages.forEach((page) => {
+    document.getElementById(page).style.display = "none";
+  });
+
+  document.getElementById(pageId).style.display = "block";
+
+  history.pushState({ page: pageId }, "", `/#${pageId}`);
+}
+
+//=============================================================
+// Authentication
 //=============================================================
 
 function checkAuthentication() {
@@ -49,23 +67,9 @@ function checkAuthentication() {
   }
 }
 
-function showPage(pageId) {
-  const pages = ["main", "login", "register"];
-
-  pages.forEach((page) => {
-    document.getElementById(page).style.display = "none";
-  });
-
-  document.getElementById(pageId).style.display = "block";
-
-  history.pushState({ page: pageId }, "", `/#${pageId}`);
-}
-
-checkAuthentication();
-
-//=============================================================
+//==============================================
 // Register Form Logic
-//=============================================================
+//==============================================
 
 REGISTER_FORM.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -81,10 +85,11 @@ REGISTER_FORM.addEventListener("submit", (e) => {
   }
   if (
     userId.trim() === "" ||
+    userId.length < 5 ||
     userPassword.trim() === "" ||
     userPassword.length < 8
   ) {
-    alert("Password must be at least 8 characters.");
+    alert("User at least 5 charactors and Password 8 characters.");
     return;
   }
   let newUser = {
@@ -101,9 +106,9 @@ REGISTER_FORM.addEventListener("submit", (e) => {
   console.log(newUser, registeredUsers);
 });
 
-//=============================================================
+//==============================================
 // Login Logic
-//=============================================================
+//==============================================
 
 LOGIN_FORM.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -128,44 +133,25 @@ LOGIN_FORM.addEventListener("submit", (e) => {
   FORM_MODAL.style.display = "none";
   showPage("main");
   checkAuthentication();
-  location.reload();
+  dashboardValues();
+  filterMyTransactions();
   console.log("user loged in and redirect to main page", userFound);
 });
 
-//=============================================================
+//==============================================
 // LogOut Logic
-//=============================================================
+//==============================================
 
 LOGOUT_BTN.addEventListener("click", () => {
-  checkAuthentication();
   localStorage.removeItem("LoggedInUser");
   location.reload();
   alert("Logged Out Successfully.");
 });
 
 //=============================================================
-// Dispsplay Transaction model on Btn click
+// Dashboard UI
 //=============================================================
 
-TRANSACTION_MODAL.style.display = "none";
-
-ADD_TRANSACTION_BTN.addEventListener("click", () => {
-  TRANSACTION_MODAL.style.display = "flex";
-});
-
-//=============================================================
-// HIde Transactionn Modal on CLick
-//=============================================================
-
-CLOSE_MODAL.addEventListener("click", () => {
-  TRANSACTION_MODAL.style.display = "none";
-});
-
-//=============================================================
-// UI Of DashBorad Values
-//=============================================================
-
-const mainSec = document.querySelector(".card-section");
 function dashboardValues() {
   const filteredTransactions = getUserTransactions();
   const filteredIncome = filteredTransactions.filter(
@@ -194,7 +180,7 @@ function dashboardValues() {
 
   const categoryWiseExpense = {};
   expenseTransactions.forEach((txCat) => {
-    if (!expenseTransactions[txCat.txCategory]) {
+    if (!categoryWiseExpense[txCat.txCategory]) {
       categoryWiseExpense[txCat.txCategory] = 0;
     }
     categoryWiseExpense[txCat.txCategory] += Number(txCat.txAmount);
@@ -202,7 +188,9 @@ function dashboardValues() {
 
   const Lable = Object.keys(categoryWiseExpense);
   const expensData = Object.values(categoryWiseExpense);
+
   console.log(categoryWiseExpense, Lable, expensData, "expenses");
+
   doughnutChartUpdate(Lable, expensData);
 
   // console.log(filterExpense, "Total Expense", TOTAL_EXPENSE);
@@ -240,9 +228,9 @@ function dashboardValues() {
     },
   ];
 
-  mainSec.innerHTML = "";
+  MAIN_CARD_SECTION.innerHTML = "";
   cardUi.forEach((item) => {
-    mainSec.innerHTML += `
+    MAIN_CARD_SECTION.innerHTML += `
                         <div class="card">
                          <div class="icon">
                          ${item.icon}
@@ -254,10 +242,10 @@ function dashboardValues() {
   });
   barChartUpdate(TOTAL_INCOME, TOTAL_EXPENSE);
 }
-dashboardValues();
-//=============================================================
+
+//==============================================
 // UI Of Transaction Table
-//=============================================================
+//==============================================
 
 function transactionRow(data) {
   TRANSACTION_ROWS.innerHTML = "";
@@ -284,6 +272,113 @@ function transactionRow(data) {
                               `);
   });
 }
+
+//=============================================================
+// Dispsplay Transaction model on Btn click
+//=============================================================
+
+TRANSACTION_MODAL.style.display = "none";
+
+ADD_TRANSACTION_BTN.addEventListener("click", () => {
+  TRANSACTION_MODAL.style.display = "flex";
+});
+
+//=============================================================
+// Hide Transactionn Modal on Btn CLick
+//=============================================================
+
+CLOSE_MODAL.addEventListener("click", () => {
+  TRANSACTION_MODAL.style.display = "none";
+});
+
+//=============================================================
+// Add Transaction Logic
+//=============================================================
+
+ADD_TRANSACTION_FORM.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const TX_TYPE = document.getElementById("txType");
+  const TX_DESCRIPTION = document.getElementById("txDescription");
+  const TX_AMOUNT = document.getElementById("txAmount");
+  const TX_DATE = document.getElementById("txDate");
+  const TX_CATEGORY = document.getElementById("txCategory");
+
+  let txType = TX_TYPE.value;
+  let txDescription = TX_DESCRIPTION.value;
+  let txAmount = TX_AMOUNT.value;
+  let txDate = TX_DATE.value;
+  let txCategory = TX_CATEGORY.value;
+
+  let newTransaction = {
+    id: Date.now(),
+    userId: userFound.id,
+    txType,
+    txDescription,
+    txAmount,
+    txDate,
+    txCategory,
+  };
+
+  if (editedTransactionId) {
+    const transactionUpdate = myTransactions.find((transaction) => {
+      return transaction.id === editedTransactionId;
+    });
+
+    transactionUpdate.txType = txType;
+    transactionUpdate.txDescription = txDescription;
+    transactionUpdate.txAmount = txAmount;
+    transactionUpdate.txDate = txDate;
+    transactionUpdate.txCategory = txCategory;
+
+    alert("Update Transaction Succsesfully");
+    editedTransactionId = null;
+    ADD_TRANSACTION_FORM.reset();
+  } else {
+    myTransactions.push(newTransaction);
+
+    alert("Added Transaction Succsesfully");
+  }
+
+  localStorage.setItem("Transactions", JSON.stringify(myTransactions));
+
+  TRANSACTION_MODAL.style.display = "none";
+  ADD_TRANSACTION_FORM.reset();
+
+  filterMyTransactions();
+
+  dashboardValues();
+
+  // location.reload();
+  // console.log(userFound, "Transaction User");
+
+  // console.log(txType, txDescription, txAmount, txDate, txCategory);
+});
+
+//=============================================================
+// Edit Transaction logic
+//=============================================================
+
+let editedTransactionId = null;
+
+function editTransaction(id) {
+  TRANSACTION_MODAL.style.display = "flex";
+
+  const transactionEdit = myTransactions.find(
+    (transaction) => transaction.id === id,
+  );
+
+  editedTransactionId = id;
+
+  console.log(transactionEdit, "this id transaction i want to edit");
+
+  txType.value = transactionEdit.txType;
+  txDescription.value = transactionEdit.txDescription;
+  txAmount.value = transactionEdit.txAmount;
+  txDate.value = transactionEdit.txDate;
+  txCategory.value = transactionEdit.txCategory;
+}
+
 //=============================================================
 // Delete Transaction logic
 //=============================================================
@@ -309,116 +404,13 @@ function deleteTransaction(id) {
 }
 
 //=============================================================
-// Update Transaction logic
-//=============================================================
-
-let editedTransactionId = null;
-
-function editTransaction(id) {
-  TRANSACTION_MODAL.style.display = "flex";
-
-  const transactionEdit = myTransactions.find(
-    (transaction) => transaction.id === id,
-  );
-
-  editedTransactionId = id;
-
-  console.log(transactionEdit, "this id transaction i want to edit");
-
-  txType.value = transactionEdit.txType;
-  txDescription.value = transactionEdit.txDescription;
-  txAmount.value = transactionEdit.txAmount;
-  txDate.value = transactionEdit.txDate;
-  txCategory.value = transactionEdit.txCategory;
-}
-
-//=============================================================
-// Add Transaction Logic
-//=============================================================
-
-ADD_TRANSACTION_FORM.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const loggedInUser = JSON.parse(localStorage.getItem("LoggedInUser"));
-
-  let TX_TYPE = document.getElementById("txType");
-  let TX_DESCRIPTION = document.getElementById("txDescription");
-  let TX_AMOUNT = document.getElementById("txAmount");
-  let TX_DATE = document.getElementById("txDate");
-  let TX_CATEGORY = document.getElementById("txCategory");
-
-  let txType = TX_TYPE.value;
-  let txDescription = TX_DESCRIPTION.value;
-  let txAmount = TX_AMOUNT.value;
-  let txDate = TX_DATE.value;
-  let txCategory = TX_CATEGORY.value;
-
-  let newTransaction = {
-    id: Date.now(),
-    userId: loggedInUser.id,
-    txType,
-    txDescription,
-    txAmount,
-    txDate,
-    txCategory,
-  };
-
-  if (editedTransactionId) {
-    const transactionUpdate = myTransactions.find((transaction) => {
-      return transaction.id === editedTransactionId;
-    });
-
-    transactionUpdate.txType = txType;
-    transactionUpdate.txDescription = txDescription;
-    transactionUpdate.txAmount = txAmount;
-    transactionUpdate.txDate = txDate;
-    transactionUpdate.txCategory = txCategory;
-
-    filterdMyTx();
-    dashboardValues();
-    alert("Update Transaction Succsesfully");
-    editedTransactionId = null;
-    TRANSACTION_MODAL.style.display = "none";
-  } else {
-    myTransactions.push(newTransaction);
-
-    alert("Added Transaction Succsesfully");
-  }
-
-  localStorage.setItem("Transactions", JSON.stringify(myTransactions));
-
-  filterdMyTx();
-
-  dashboardValues();
-
-  ADD_TRANSACTION_FORM.reset();
-
-  TRANSACTION_MODAL.style.display = "none";
-
-  location.reload();
-  console.log(loggedInUser, "Transaction User");
-
-  // console.log(txType, txDescription, txAmount, txDate, txCategory);
-});
-
-//=============================================================
-// Dark Mode Logic
-//=============================================================
-
-const DARK_MODE_BTN = document.querySelector("#dark-mode-btn");
-
-DARK_MODE_BTN.addEventListener("click", () => {
-  document.body.classList.toggle("dark-theme");
-  console.log("dark mode");
-});
-
-//=============================================================
-// Dark Mode Logic
+// Search
 //=============================================================
 
 const SEARCH_INPUT = document.querySelector("#searchInput");
 const TYPE_FILTER = document.querySelector("#typeFilter");
 
-function filterdMyTx() {
+function filterMyTransactions() {
   const filteredTransactions = getUserTransactions();
   const searchedWord = SEARCH_INPUT.value.toLowerCase();
   const searchType = TYPE_FILTER.value;
@@ -432,20 +424,20 @@ function filterdMyTx() {
       searchType === "all" || transaction.txType === searchType;
 
     return matchedWord && typeFilterd;
-    console.log(matchedWord, typeFilterd);
+    // console.log(matchedWord, typeFilterd);
   });
 
   transactionRow(searchfilterd);
 
   console.log(searchfilterd, "lll");
 }
-filterdMyTx();
+filterMyTransactions();
 
-SEARCH_INPUT.addEventListener("input", filterdMyTx);
-TYPE_FILTER.addEventListener("change", filterdMyTx);
+SEARCH_INPUT.addEventListener("input", filterMyTransactions);
+TYPE_FILTER.addEventListener("change", filterMyTransactions);
 
 //=============================================================
-// Chart Manage Logic
+// Chart Logic
 //=============================================================
 
 function barChartUpdate(income, expense) {
@@ -516,4 +508,40 @@ function doughnutChartUpdate(Lable, expensData) {
     },
   });
 }
-doughnutChartUpdate();
+
+//=============================================================
+// Dark Mode Logic
+//=============================================================
+
+const DARK_MODE_BTN = document.querySelector("#dark-mode-btn");
+
+function darkMode(theme) {
+  if (theme === "dark") {
+    document.body.classList.add("dark-theme");
+    DARK_MODE_BTN.checked = true;
+  } else {
+    document.body.classList.remove("dark-theme");
+    DARK_MODE_BTN.checked = false;
+  }
+}
+const setTheme = localStorage.getItem("theme") || "light";
+
+darkMode(setTheme);
+
+DARK_MODE_BTN.addEventListener("change", () => {
+  const theme = DARK_MODE_BTN.checked ? "dark" : "light";
+
+  darkMode(theme);
+
+  localStorage.setItem("theme", theme);
+});
+
+//=============================================================
+// Initial App Load
+//=============================================================
+
+checkAuthentication();
+
+dashboardValues();
+
+filterMyTransactions();
